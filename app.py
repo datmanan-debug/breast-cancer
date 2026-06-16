@@ -1,6 +1,6 @@
 import streamlit as st
 
-st.set_page_config(page_title="AI Mammogram Analysis", page_icon="🎗️", layout="centered")
+st.set_page_config(page_title="AI Mammogram Analysis", page_icon="🎗", layout="centered")
 
 st.markdown("""
 <style>
@@ -50,17 +50,18 @@ div[data-testid="stFileUploader"] button:hover {
     color: #FFFFFF !important;
 }
 
-/* أزرار Back و Next */
+/* 🌟 أزرار دائرية ومتقاربة مثل الصورة الأولى 🌟 */
 div.stButton > button {
-    background-color: #E91E8C !important;
+    background-color: #D81B60 !important; /* لون مطابق تماماً للصورة الأولى */
     color: #FFFFFF !important;
     border: none !important;
-    border-radius: 8px !important;
-    padding: 10px 10px !important;
-    font-size: 17px !important;
+    border-radius: 25px !important; /* حواف دائرية بالكامل */
+    padding: 8px 25px !important;   /* مسافة داخلية متناسقة */
+    font-size: 16px !important;
     font-weight: bold !important;
     white-space: nowrap !important;
-    width: 100% !important;
+    display: block !important;
+    width: 100% !important;         /* تتمدد بكامل عرض العمود المخصص لها لتسهيل المحاذاة */
 }
 
 div.stButton > button:hover {
@@ -105,7 +106,8 @@ if uploaded_file is not None:
 
 st.write("<br>", unsafe_allow_html=True)
 
-col_back, col_space, col_next = st.columns([3, 1, 3])
+# 🌟 تقسيم ذكي للأعمدة [فراغ جانبي، زر باك، زر نكست، فراغ جانبي] لتقريب الأزرار من بعضها في المنتصف 🌟
+col_space_left, col_back, col_next, col_space_right = st.columns([2.5, 1.5, 1.5, 2.5])
 
 with col_back:
     if st.button("« Back"):
