@@ -36,15 +36,26 @@ st.markdown("""
         color: #880E4F !important;
     }
 
-    /* 3. تخصيص أزرار التحكم (Next) باللون الوردي المتناسق */
+    /* 3. حاوية خاصة لدفع زر Next إلى أسفل اليمين بالكامل وبمساحة مريحة */
+    .next-btn-container {
+        display: flex;
+        justify-content: flex-end;
+        width: 100%;
+        margin-top: 40px;
+        padding-right: 10px;
+    }
+
+    /* تخصيص أزرار التحكم (Next) باللون الوردي المتناسق ومنع انقسام النص */
     div.stButton > button {
         background-color: #FCE4EC !important;
         color: #C2185B !important;
         border: 2px solid #E91E63 !important;
-        border-radius: 12px !important;
-        padding: 8px 35px !important;
+        border-radius: 15px !important;
+        padding: 10px 40px !important; /* زيادة الحشو الداخلي ليصبح الزر عريضاً ومرتباً */
         font-size: 18px !important;
         font-weight: bold !important;
+        white-space: nowrap !important; /* يمنع انقسام الكلمة إلى سطرين نهائياً */
+        min-width: 120px !important;   /* تحديد حد أدنى لعرض الزر */
     }
     
     /* تأثير عند تمرير الماوس فوق الزر (ينعكس اللون) */
@@ -71,11 +82,8 @@ uploaded_file = st.file_uploader(
 if uploaded_file is not None:
     st.success(f"📂 تم رفع ملف الأشعة بنجاح: {uploaded_file.name}")
 
-# مسافة قبل زر التالي
-st.write("<br><br>", unsafe_allow_html=True)
-
-# --- زر الانتقال (Next) في أسفل اليمين ---
-col1, col2 = st.columns([6, 1])
-with col2:
-    if st.button("Next"):
-        st.info("سيتم الانتقال للواجهة الرابعة...")
+# --- وضع زر التالي داخل الحاوية المخصصة لليمين بدون تقسيم الصفوف ---
+st.markdown('<div class="next-btn-container">', unsafe_allow_html=True)
+if st.button("Next"):
+    st.info("سيتم الانتقال للواجهة الرابعة...")
+st.markdown('</div>', unsafe_allow_html=True)
