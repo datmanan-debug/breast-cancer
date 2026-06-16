@@ -3,7 +3,7 @@ import streamlit as st
 # إعدادات الصفحة الأساسية
 st.set_page_config(page_title="AI Mammogram Analysis", layout="centered")
 
-# --- إضافة تنسيقات CSS لتخصيص الألوان الوردية المطابقة لواجهاتك ---
+# --- إضافة تنسيقات CSS لتخصيص الألوان والأزرار (Back و Next) ---
 st.markdown("""
     <style>
     /* 1. تخصيص حاوية رفع الملفات (المستطيل الوردي المريح) */
@@ -36,29 +36,29 @@ st.markdown("""
         color: #880E4F !important;
     }
 
-    /* 3. حاوية خاصة لدفع زر Next إلى أسفل اليمين بالكامل وبمساحة مريحة */
-    .next-btn-container {
+    /* 3. حاوية الأزرار أسفل الشاشة (توزيع الأزرار يمين ويسار بسلاسة) */
+    .buttons-container {
         display: flex;
-        justify-content: flex-end;
+        justify-content: space-between; /* يدفع زر Back لليسار وزر Next لليمين */
         width: 100%;
-        margin-top: 40px;
-        padding-right: 10px;
+        margin-top: 50px;
+        padding: 0 10px;
     }
 
-    /* تخصيص أزرار التحكم (Next) باللون الوردي المتناسق ومنع انقسام النص */
+    /* تخصيص ستايل الأزرار باللون الوردي الموحد ومنع انقسام النص */
     div.stButton > button {
         background-color: #FCE4EC !important;
         color: #C2185B !important;
         border: 2px solid #E91E63 !important;
         border-radius: 15px !important;
-        padding: 10px 40px !important; /* زيادة الحشو الداخلي ليصبح الزر عريضاً ومرتباً */
+        padding: 10px 40px !important; /* مساحة داخلية مريحة للزر */
         font-size: 18px !important;
         font-weight: bold !important;
-        white-space: nowrap !important; /* يمنع انقسام الكلمة إلى سطرين نهائياً */
-        min-width: 120px !important;   /* تحديد حد أدنى لعرض الزر */
+        white-space: nowrap !important; /* يمنع انقسام الكلمات نهائياً */
+        min-width: 130px !important;   /* عرض أدنى مناسب للزرين */
     }
     
-    /* تأثير عند تمرير الماوس فوق الزر (ينعكس اللون) */
+    /* تأثير عند تمرير الماوس فوق الأزرار */
     div.stButton > button:hover {
         background-color: #E91E63 !important;
         color: white !important;
@@ -82,8 +82,15 @@ uploaded_file = st.file_uploader(
 if uploaded_file is not None:
     st.success(f"📂 تم رفع ملف الأشعة بنجاح: {uploaded_file.name}")
 
-# --- وضع زر التالي داخل الحاوية المخصصة لليمين بدون تقسيم الصفوف ---
-st.markdown('<div class="next-btn-container">', unsafe_allow_html=True)
-if st.button("Next"):
-    st.info("سيتم الانتقال للواجهة الرابعة...")
-st.markdown('</div>', unsafe_allow_html=True)
+
+# --- توزيع الأزرار (Back على اليسار و Next على اليمين) باستعمال الأعمدة البرمجية لضمان عمل أزرار Streamlit ---
+st.write("<br>", unsafe_allow_html=True)
+col_back, col_space, col_next = st.columns([2, 5, 2])
+
+with col_back:
+    if st.button("Back"):
+        st.info("الرجوع للواجهة الثانية...")
+
+with col_next:
+    if st.button("Next"):
+        st.info("الانتقال للواجهة الرابعة...")
